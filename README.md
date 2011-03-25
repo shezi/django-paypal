@@ -21,7 +21,7 @@ Using PayPal Payments Standard IPN:
 
 1. Download the code from GitHub:
 
-        git clone git://github.com/johnboxall/django-paypal.git paypal
+        git clone git://github.com/shezi/django-paypal.git paypal
 
 1. Edit `settings.py` and add  `paypal.standard.ipn` to your `INSTALLED_APPS` 
    and `PAYPAL_RECEIVER_EMAIL`:
@@ -142,6 +142,16 @@ Paypal Payment Data Transfer (PDT) allows you to display transaction details to 
             (r'^paypal/pdt/', include('paypal.standard.pdt.urls')),
             ...
         )
+    Alternatively, you can use the pdt decorator to work with PDT information in one of your own views.
+    To do this, add the decorator to one of your views.
+        # views.py
+        from paypal.standard.pdt.decorators import pdt
+
+        @pdt
+        def view_func(request, *args, **kwargs):
+            ...
+    The decorator checks for any GET parameters corresponding to a PDT call and adds the keyword arguments `pdt_active`, `pdt_failed` and `pdt` to the view call.
+
 
 Using PayPal Payments Standard with Subscriptions:
 --------------------------------------------------
